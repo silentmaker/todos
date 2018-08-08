@@ -101,7 +101,7 @@ export default {
   transition: all 0.3s ease-in;
   background-color: @base;
   z-index: 999;
-  padding: 60px 20px;
+  padding: 20px 20px 60px;
   box-sizing: border-box;
 
   &.active {

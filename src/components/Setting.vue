@@ -46,8 +46,8 @@ export default {
   .setting-btn {
     position: fixed;
     right: 5%;
-    width: 48px;
-    height: 48px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background-color: @primary;
     z-index: 99;
@@ -56,26 +56,27 @@ export default {
     align-items: center;
   }
   .setting-btn {
-    bottom: 10%;
+    bottom: 100px;
 
     &:after {
       content: "Ⅲ";
       color: @base;
       transform: rotate(-90deg);
-      font-size: 25px;
+      font-size: 23px;
     }
     &.close:after {
       content: "✕";
+      font-size: 22px;
     }
   }
   .create-btn {
-    bottom: 20%;
+    bottom: 160px;
 
     &:after {
       content: "✕";
       color: @base;
       transform: rotate(-45deg);
-      font-size: 25px;
+      font-size: 22px;
     }
   }
   .settings {
