@@ -1,28 +1,31 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div :class="`theme-${settings.theme}`">
+    <Header :mode="settings.mode"></Header>
+    <List :todos="todos" :mode="settings.mode"></List>
+    <Setting :settings="settings"></Setting>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
+import { mapState, mapGetters } from 'vuex';
+import Header from './components/Header.vue';
+import List from './components/List.vue';
+import Setting from './components/Setting.vue';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    HelloWorld,
+    Header,
+    List,
+    Setting,
+  },
+  computed: {
+    ...mapState(['settings']),
+    ...mapGetters(['todos']),
   },
 };
 </script>
 
 <style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import url('./assets/common.less');
 </style>
