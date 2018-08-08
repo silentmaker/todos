@@ -31,10 +31,13 @@ export default new Vuex.Store({
       const todos = {};
       state.data.map((item) => {
         const tag = state.settings.mode ? item.date : item.category;
-        if (!todos[tag]) {
-          todos[tag] = { tag, items: [] };
+
+        if (state.settings.done || !item.done) {
+          if (!todos[tag]) {
+            todos[tag] = { tag, items: [] };
+          }
+          todos[tag].items.push(item);
         }
-        todos[tag].items.push(item);
       });
       return Object.values(todos);
     },

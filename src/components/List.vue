@@ -3,11 +3,9 @@
     <ul class="todo-list" v-if="todos.length">
       <li class="todo-group" v-for="group in todos" :key="group.tag">
         <div class="group-tag">{{ group.tag }}</div>
-        <div class="todo-item" v-for="todo in group.items" :key="todo.id">
-          <div class="todo-check" @click="toggle(todo)">
-            <div class="done" v-if="todo.done"></div>
-            <div class="todo" v-else></div>
-          </div>
+        <div :class="['todo-item', todo.done ? 'done' : '']"
+          v-for="todo in group.items" :key="todo.id">
+          <div class="todo-check" @click="toggle(todo)"></div>
           <div class="todo-content" @click="edit(todo)">
             <div>{{ todo.title }}</div>
             <div class="todo-remark" v-if="settings.remarks">{{ todo.remark }}</div>
@@ -71,18 +69,12 @@ export default {
         align-items: top;
 
         .todo-check {
-          flex: 0 0 36px;
-
-          .todo,
-          .done {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: solid 1px @primary;
-          }
-          .done {
-            background-color: @primary;
-          }
+          position: relative;
+          flex: 0 0 20px;
+          height: 20px;
+          margin-right: 10px;
+          border-radius: 6px;
+          border: solid 1px @primary;
         }
         .todo-content {
           flex: 1 1 0;
@@ -91,6 +83,19 @@ export default {
 
           .todo-remark {
             color: @secondary;
+          }
+        }
+        &.done {
+          .todo-check:after {
+            content: '✓';
+            color: @primary;
+            font-size: 32px;
+            position: absolute;
+            top: -12px;
+          }
+          .todo-content,
+          .todo-remark {
+            text-decoration: line-through;
           }
         }
       }

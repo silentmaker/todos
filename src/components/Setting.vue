@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <div class="setting-btn" @click="toggleSetting('isActive')"></div>
+    <div :class="['setting-btn', settings.isActive ? 'close' : '']"
+      @click="toggleSetting('isActive')"></div>
 
     <transition name="fade">
       <div class="create-btn" @click="create" v-if="!settings.isActive"></div>
@@ -50,12 +51,32 @@ export default {
     border-radius: 50%;
     background-color: @primary;
     z-index: 99;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   .setting-btn {
     bottom: 10%;
+
+    &:after {
+      content: "Ⅲ";
+      color: @base;
+      transform: rotate(-90deg);
+      font-size: 25px;
+    }
+    &.close:after {
+      content: "✕";
+    }
   }
   .create-btn {
     bottom: 20%;
+
+    &:after {
+      content: "✕";
+      color: @base;
+      transform: rotate(-45deg);
+      font-size: 25px;
+    }
   }
   .settings {
     position: absolute;
