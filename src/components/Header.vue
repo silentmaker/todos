@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>MY TODOS</h1>
+    <h1 key="settings" v-if="settings.isActive">SETTINGS</h1>
+    <h1 key="mytodos" v-else>MY TODOS</h1>
   </div>
 </template>
 
@@ -8,11 +9,7 @@
 export default {
   name: 'Header',
   props: {
-    mode: String,
+    settings: Object,
   },
 };
 </script>
-
-<style scoped lang="less">
-
-</style>

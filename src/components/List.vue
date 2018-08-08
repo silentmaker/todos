@@ -1,54 +1,40 @@
 <template>
   <div class="container">
-    <ul class="todo-list">
-      <li class="todo-group" v-for="group in todos" :key="group.id">
+    <ul class="todo-list" v-if="todos.length">
+      <li class="todo-group" v-for="group in todos" :key="group.tag">
         <div class="group-tag">{{ group.tag }}</div>
-        <div class="todo-item" v-for="todo in group.items" :key="todo.id">  
-          <div class="todo-check" @click="checkTodo">
+        <div class="todo-item" v-for="todo in group.items" :key="todo.id">
+          <div class="todo-check" @click="toggle(todo)">
             <div class="done" v-if="todo.done"></div>
             <div class="todo" v-else></div>
           </div>
-          <div class="todo-content">{{ todo.title }}</div>
+          <div class="todo-content" @click="edit(todo)">
+            <div>{{ todo.title }}</div>
+            <div class="todo-remark" v-if="settings.remarks">{{ todo.remark }}</div>
+          </div>
         </div>
-        <div class="add-todo" @click="add(group.tag)">ADD</div>
+        <div class="add-todo" @click="create(group.tag)">ADD</div>
       </li>
     </ul>
-    <Todo item="currentItem" v-show="currentItem.id"></Todo>
+    <div v-else>Nothing To Do Yet.</div>
+    <Todo></Todo>
   </div>
 </template>
 
 <script>
+import { mapMutations, mapGetters } from 'vuex';
 import Todo from './Todo.vue';
 
 export default {
   name: 'List',
-  components: {
-    Todo
-  },
-  props: {
-    todos: Array,
-    mode: String,
-  },
-  data() {
-    return {
-      currentItem: {},
-    };
+  props: { settings: Object },
+  components: { Todo },
+  computed: {
+    ...mapGetters(['todos']),
   },
   methods: {
-    checkTodo() {
-      console.log("TODO: check");
-    },
-    add(tag) {
-      this.currentItem = {
-        id: new Date().getTime(),
-        title: '',
-        remark: '',
-        done: false,
-        date: this.mode === 'timeline' ? tag : '',
-        category: this.mode === 'category' ? tag : '',
-      }
-    }
-  }
+    ...mapMutations(['create', 'edit', 'toggle']),
+  },
 };
 </script>
 
@@ -94,11 +80,18 @@ export default {
             border-radius: 50%;
             border: solid 1px @primary;
           }
+          .done {
+            background-color: @primary;
+          }
         }
         .todo-content {
           flex: 1 1 0;
           margin-bottom: 16px;
           line-height: 24px;
+
+          .todo-remark {
+            color: @secondary;
+          }
         }
       }
     }

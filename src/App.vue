@@ -1,13 +1,15 @@
 <template>
-  <div :class="`theme-${settings.theme}`">
-    <Header :mode="settings.mode"></Header>
-    <List :todos="todos" :mode="settings.mode"></List>
+  <div :class="[settings.theme ? 'dark' : '']">
+    <Header :settings="settings"></Header>
     <Setting :settings="settings"></Setting>
+    <transition name="fade">
+      <List :settings="settings" v-show="!settings.isActive"></List>
+    </transition>
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import Header from './components/Header.vue';
 import List from './components/List.vue';
 import Setting from './components/Setting.vue';
@@ -19,13 +21,15 @@ export default {
     List,
     Setting,
   },
-  computed: {
-    ...mapState(['settings']),
-    ...mapGetters(['todos']),
+  created() {
+    this.init();
   },
+  computed: { ...mapState(['settings']) },
+  methods: { ...mapMutations(['init']) },
 };
 </script>
 
 <style lang="less">
+@import url('./assets/reset.less');
 @import url('./assets/common.less');
 </style>
