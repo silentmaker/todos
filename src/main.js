@@ -1,12 +1,14 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBars, faTimes, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faBars, faTimes, faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle } from '@fortawesome/free-regular-svg-icons/faCircle';
+
 import Vue from 'vue';
 import App from './App.vue';
 import store from './store';
 import './registerServiceWorker';
 
-library.add([faBars, faTimes, faPlus]);
+library.add(faBars, faTimes, faPlus, faCircle, faCheckCircle);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 

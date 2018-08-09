@@ -5,13 +5,16 @@
         <div class="group-tag">{{ group.tag }}</div>
         <div :class="['todo-item', todo.done ? 'done' : '']"
           v-for="todo in group.items" :key="todo.id">
-          <div class="todo-check" @click="toggle(todo)"></div>
-          <div class="todo-content" @click="edit(todo)">
+          <div class="todo-check" @click="toggle(todo)">
+            <font-awesome-icon icon="check-circle" v-if="todo.done" />
+            <font-awesome-icon :icon="['far', 'circle']" v-else />
+          </div>
+          <div class="todo-content" @click.prevent="edit(todo)">
             <div>{{ todo.title }}</div>
             <div class="todo-remark" v-if="settings.remarks">{{ todo.remark }}</div>
           </div>
         </div>
-        <div class="add-todo" @click="create(group.tag)">ADD</div>
+        <div class="add-todo" @click.prevent="create(group.tag)">ADD</div>
       </li>
     </ul>
     <div v-else>Nothing To Do Yet.</div>
@@ -69,12 +72,11 @@ export default {
         align-items: top;
 
         .todo-check {
-          position: relative;
           flex: 0 0 20px;
           height: 20px;
           margin-right: 10px;
-          border-radius: 4px;
-          border: solid 1px @primary;
+          font-size: 1.25rem;
+          color: @primary;
         }
         .todo-content {
           flex: 1 1 0;
@@ -86,13 +88,6 @@ export default {
           }
         }
         &.done {
-          .todo-check:after {
-            content: '✓';
-            color: @primary;
-            font-size: 32px;
-            position: absolute;
-            top: -12px;
-          }
           .todo-content,
           .todo-remark {
             text-decoration: line-through;
