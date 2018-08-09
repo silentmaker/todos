@@ -59,6 +59,7 @@ export default {
     border-radius: 50%;
     background-color: @primary;
     z-index: 99;
+    box-shadow: 0 0px 10px 5px rgba(0, 0, 0, 0.2);
   }
   .setting-btn {
     bottom: 100px;
