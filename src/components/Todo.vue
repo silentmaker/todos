@@ -4,11 +4,11 @@
   <div :class="['todo-editor', todo.id ? 'active' : '']">
     <div class="form-group">
       <label>Todo</label>
-      <input name="title" v-model="todo.title" />
+      <input name="title" autocomplete="off" v-model="todo.title" />
     </div>
     <div class="form-group">
       <label>Remark</label>
-      <input name="remark" v-model="todo.remark" />
+      <input name="remark" autocomplete="off" v-model="todo.remark" />
     </div>
     <div class="form-group">
       <div class="date-chooser">
@@ -26,7 +26,9 @@
     </div>
     <ul class="operates">
       <li @click="clear">CANCEL</li>
-      <li @click="saveTodo" class="save">SAVE</li>
+      <transition name="fade">
+        <li @click="saveTodo" v-show="!!todo.title" class="save">SAVE</li>
+      </transition>
       <li @click="destoryTodo">DELETE</li>
     </ul>
   </div>
@@ -160,7 +162,7 @@ export default {
       &.active {
         background-color: @primary;
         color: @base;
-        border-radius: 10px;
+        border-radius: 4px;
       }
     }
   }

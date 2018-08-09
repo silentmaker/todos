@@ -46,7 +46,7 @@ export default {
       min-height: 50px;
       padding: 36px 20px 0;
       box-shadow: 0 6px 24px 6px rgba(0, 0, 0, 0.05);
-      border-radius: 6px;
+      border-radius: 8px;
       margin-top: 30px;
 
       .group-tag {
@@ -73,7 +73,7 @@ export default {
           flex: 0 0 20px;
           height: 20px;
           margin-right: 10px;
-          border-radius: 6px;
+          border-radius: 4px;
           border: solid 1px @primary;
         }
         .todo-content {
