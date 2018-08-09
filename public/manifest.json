@@ -1,6 +1,6 @@
 {
-  "name": "todos",
-  "short_name": "todos",
+  "name": "My Todos",
+  "short_name": "Todos",
   "icons": [
     {
       "src": "/img/icons/android-chrome-192x192.png",
@@ -13,7 +13,7 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/todos/index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#ffffff"
