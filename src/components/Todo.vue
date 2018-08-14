@@ -13,7 +13,15 @@
     <div class="form-group">
       <div class="date-chooser">
         <label>Date</label>
-        <div v-for="(part, index) in dateParts" :key="index">{{ part }}</div>
+        <div class="date-part" v-for="(part, index) in dateParts" :key="index">
+          <font-awesome-icon class="up" icon="chevron-up"
+            v-show="part < upLimit[index]"
+            @click="changeDate(index, 1)" />
+          {{ part }}
+          <font-awesome-icon class="down" icon="chevron-down"
+            v-show="part > downLimit[index]"
+            @click="changeDate(index, -1)" />
+        </div>
       </div>
     </div>
     <div class="form-group">
@@ -25,11 +33,15 @@
       </ul>
     </div>
     <ul class="operates">
-      <li @click="clear">CANCEL</li>
+      <li @click="clear">
+        <font-awesome-icon icon="times" />
+      </li>
       <transition name="fade">
         <li @click="saveTodo" v-show="!!todo.title" class="save">SAVE</li>
       </transition>
-      <li @click="destoryTodo">DELETE</li>
+      <li @click="destoryTodo">
+        <font-awesome-icon :icon="['far', 'trash-alt']" />
+      </li>
     </ul>
   </div>
 </div>
@@ -43,24 +55,40 @@ export default {
   data() {
     return {
       todo: {},
-      categories: ['LIFE', 'STUDY', 'WORK', 'OTHER'],
+      dateParts: [],
+      upLimit: ['2099', '12', '31'],
+      downLimit: ['2017', '01', '01'],
+      categories: ['LIFE', 'STUDY', 'WORK', 'DEV'],
     };
   },
   watch: {
     currentTodo(value) {
       this.todo = Object.assign({}, value);
+      this.dateParts = this.todo.date ? this.todo.date.split('-') : [];
     },
   },
   computed: {
     ...mapState(['currentTodo']),
-    dateParts() { return this.todo.date ? this.todo.date.split('-') : ['', '', '']; },
   },
   methods: {
     ...mapMutations(['clear', 'save', 'destory']),
+    changeDate(idx, value) {
+      this.dateParts = this.dateParts.map((part, index) => {
+        let num = part;
+        if (index === idx) {
+          num = parseInt(num, 10) + value;
+          if (idx > 0) {
+            num = `0${num}`;
+            num = num.slice(-2);
+          }
+        }
+        return num;
+      });
+    },
     saveTodo() {
       const todo = Object.assign({}, this.todo, {
         date: this.dateParts.join('-'),
-        category: this.todo.category || 'OTHER',
+        category: this.todo.category || 'LIFE',
       });
 
       this.save(todo);
@@ -125,8 +153,9 @@ export default {
       border: none;
       border-bottom: solid 1px @secondary;
       line-height: 2.6rem;
-      &[name=title] {
-        font-size: 1.2rem;
+      font-size: 1.2rem;
+      &[name=remark] {
+        color: @secondary;
       }
       &:focus {
         border-bottom: solid 1px @primary;
@@ -138,7 +167,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     margin-top: 0.8rem;
-    padding-right: 20%;
+    padding-right: 10%;
 
     label {
       width: auto;
@@ -148,7 +177,17 @@ export default {
       font-size: 20px;
     }
     .date-part {
-      padding: 0 10px;
+      position: relative;
+
+      .up, .down {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        color: @secondary;
+        &:active { color: @primary; }
+      }
+      .up { top: -1.4rem; }
+      .down { bottom: -1.4rem; }
     }
   }
   .category-chooser {

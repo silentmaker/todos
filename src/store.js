@@ -21,8 +21,8 @@ export default new Vuex.Store({
       done: true,
       stared: true,
       remarks: true,
-      theme: true, // true: light, false: dark
-      mode: true, // true: timeline, false: category
+      lightTheme: true, // true: light, false: dark
+      dateMode: true, // true: timeline, false: category
     },
     currentTodo: {},
   },
@@ -30,7 +30,7 @@ export default new Vuex.Store({
     todos: (state) => {
       const todos = {};
       state.data.map((item) => {
-        const tag = state.settings.mode ? item.date : item.category;
+        const tag = state.settings.dateMode ? item.date : item.category;
 
         if (state.settings.done || !item.done) {
           if (!todos[tag]) {
@@ -47,13 +47,13 @@ export default new Vuex.Store({
       state.data = JSON.parse(localStorage.getItem('todos')) || [];
       state.settings = Object.assign({}, state.settings, (JSON.parse(localStorage.getItem('settings')) || {}));
     },
-    create(state, tag) {
+    create(state, { tag }) {
       state.currentTodo = {
         id: new Date().getTime(),
         title: '',
         remark: '',
-        date: tag && state.settings.mode === 'timeline' ? tag : new Date().toISOString().substr(0, 10),
-        category: tag && state.settings.mode === 'category' ? tag : '',
+        date: tag && state.settings.dateMode ? tag : new Date().toISOString().substr(0, 10),
+        category: tag && !state.settings.dateMode ? tag : '',
         done: false,
       };
     },

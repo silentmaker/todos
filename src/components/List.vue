@@ -14,7 +14,7 @@
             <div class="todo-remark" v-if="settings.remarks">{{ todo.remark }}</div>
           </div>
         </div>
-        <div class="add-todo" @click.prevent="create(group.tag)">ADD</div>
+        <div class="add-todo" @click.prevent="create({tag: group.tag})">ADD</div>
       </li>
     </ul>
     <div v-else>Nothing To Do Yet.</div>

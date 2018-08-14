@@ -34,7 +34,7 @@ export default {
   props: { settings: Object },
   data() {
     return {
-      options: ['done', 'stared', 'remarks', 'theme', 'mode'],
+      options: ['done', 'stared', 'remarks', 'lightTheme', 'dateMode'],
       infos: ['Show Dones', 'Show Stareds', 'Show Remarks', 'Night Mode', 'Group By Date'],
     };
   },

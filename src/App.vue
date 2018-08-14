@@ -1,5 +1,5 @@
 <template>
-  <div :class="[settings.theme ? 'dark' : '']">
+  <div :class="[settings.lightTheme ? 'light' : 'dark']">
     <Header :settings="settings"></Header>
     <Setting :settings="settings"></Setting>
     <transition name="fade">
